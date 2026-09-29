@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" id="html-root" class="light">
+<html lang="pt-BR" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Palavra & Vida - Bíblia Completa e Edificação Diária</title>
+  <title>Portal Palavra & Vida - Bíblia Completa e Stories</title>
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -16,16 +16,16 @@
   <style>
     .ad-spot { background: repeating-linear-gradient(45deg, #f8fafc, #f8fafc 10px, #f1f5f9 10px, #f1f5f9 20px); border: 1px dashed #cbd5e1; }
     .dark .ad-spot { background: repeating-linear-gradient(45deg, #0f172a, #0f172a 10px, #1e293b 10px, #1e293b 20px); border-color: #334155; }
-    .tab-active { border-bottom: 3px solid #f59e0b; color: #ffffff; font-weight: 700; }
+    .tab-active { border-bottom: 3px solid #f59e0b; color: #ffffff !important; font-weight: 700; }
   </style>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
 
-  <!-- CABEÇALHO E NAVEGAÇÃO PRINCIPAL -->
-  <header class="bg-indigo-950 dark:bg-slate-950 text-white shadow-xl sticky top-0 z-50 border-b border-indigo-900 dark:border-slate-800">
+  <!-- CABEÇALHO DA PLATAFORMA -->
+  <header class="bg-indigo-950 dark:bg-slate-950 text-white shadow-xl sticky top-0 z-50 border-b dark:border-slate-800">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
       
-      <!-- LOGO DA PLATAFORMA -->
+      <!-- LOGO -->
       <div class="flex items-center gap-3">
         <div class="bg-amber-500 text-indigo-950 p-2.5 rounded-2xl text-xl font-black shadow-md">
           <i class="fa-solid fa-hands-holding-child"></i>
@@ -36,19 +36,20 @@
         </div>
       </div>
 
-      <!-- BOTÃO TEMA CLARO/ESCURO & OFENSIVA -->
+      <!-- CONTADOR + ALTERNADOR CLARO/ESCURO -->
       <div class="flex items-center gap-3">
-        <button onclick="alternarTema()" id="btn-tema" title="Alternar Modo Claro/Escuro" class="bg-indigo-900 dark:bg-slate-800 hover:bg-indigo-800 dark:hover:bg-slate-700 text-amber-400 p-2.5 rounded-full border border-indigo-700/50 dark:border-slate-700 transition flex items-center justify-center w-10 h-10 shadow">
-          <i class="fa-solid fa-moon text-base" id="icone-tema"></i>
-        </button>
-
-        <div class="flex items-center gap-2 bg-indigo-900/80 dark:bg-slate-800/80 px-3.5 py-1.5 rounded-full border border-indigo-700/50 dark:border-slate-700">
+        <div class="flex items-center gap-2 bg-indigo-900/80 dark:bg-slate-800 px-3.5 py-1.5 rounded-full border border-indigo-700/50 dark:border-slate-700">
           <span class="text-amber-400 text-base">🔥</span>
-          <span class="text-xs font-bold text-indigo-100"><span id="streak-count">1</span> dias</span>
+          <span class="text-xs font-bold text-indigo-100 dark:text-slate-200"><span id="streak-count">1</span> dias</span>
         </div>
+
+        <!-- BOTÃO MODO CLARO / ESCURO -->
+        <button onclick="alternarModoEscuro()" id="btn-theme-toggle" title="Alternar Modo Claro/Escuro" class="w-9 h-9 rounded-full bg-indigo-900 dark:bg-slate-800 border border-indigo-700 dark:border-slate-700 flex items-center justify-center text-amber-400 hover:scale-105 transition">
+          <i class="fa-solid fa-moon" id="icon-theme"></i>
+        </button>
       </div>
 
-      <!-- MENUS DE NAVEGAÇÃO -->
+      <!-- NAUFRÁGIO DE MENUS -->
       <nav class="flex gap-1 sm:gap-2 text-xs font-semibold text-gray-300 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
         <button onclick="mudarAba('estudio')" id="btn-estudio" class="py-2 px-3 tab-active flex items-center gap-1.5">
           <i class="fa-solid fa-wand-magic-sparkles text-emerald-400"></i> Gerador de Stories
@@ -72,7 +73,7 @@
     </div>
   </header>
 
-  <!-- BANNER PUBLICIDADE GOOGLE ADSENSE (TOPO) -->
+  <!-- BANNER PUBLICIDADE SUPERIOR -->
   <div class="max-w-7xl mx-auto w-full px-4 mt-3">
     <div class="ad-spot py-2.5 text-center text-xs text-slate-400 dark:text-slate-500 rounded-2xl">
       <span class="uppercase tracking-widest text-[9px] font-bold block">Publicidade Google AdSense</span>
@@ -86,13 +87,13 @@
     <!-- ÁREA CENTRAL (3 COLUNAS) -->
     <div class="lg:col-span-3 space-y-6">
 
-      <!-- GERADOR DE CARDS PARA STORIES -->
+      <!-- GERADOR DE STORIES -->
       <section id="aba-estudio" class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 text-center transition-colors">
         <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-2">Gerador de Versículos para Stories</h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Crie uma imagem formatada em alta qualidade para publicar no Instagram ou WhatsApp:</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Crie e baixe um card formatado em alta definição para postar no Instagram ou WhatsApp:</p>
 
-        <!-- CARD VISUAL DE PRÉ-VISUALIZAÇÃO -->
-        <div id="card-para-download" class="max-w-xs sm:max-w-sm mx-auto bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-900 text-white p-8 rounded-3xl shadow-2xl space-y-6 my-4 border border-indigo-700/50 relative overflow-hidden transition-all duration-300">
+        <!-- PRÉ-VISUALIZAÇÃO DO CARD -->
+        <div id="card-preview-box" class="max-w-xs sm:max-w-sm mx-auto bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-900 text-white p-8 rounded-3xl shadow-2xl space-y-6 my-4 border border-indigo-700/50 relative overflow-hidden transition-all duration-300">
           <div class="text-amber-400 font-serif text-xs font-bold tracking-widest uppercase">✨ PALAVRA & VIDA</div>
           
           <blockquote id="card-versiculo-texto" class="text-lg sm:text-xl font-serif italic leading-relaxed text-indigo-100">
@@ -106,12 +107,12 @@
           </div>
         </div>
 
-        <!-- BOTOES DE AÇÃO -->
+        <!-- BOTEÕS DE AÇÃO -->
         <div class="flex flex-wrap justify-center gap-3 mt-6">
           <button onclick="sortearNovoVersiculoCard()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
             <i class="fa-solid fa-dice text-amber-400"></i> Gerar Outro Versículo
           </button>
-          <button onclick="gerarEBaixarImagem()" class="bg-amber-500 hover:bg-amber-600 text-indigo-950 font-black text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
+          <button onclick="gerarEBaixarImagemNativa()" class="bg-amber-500 hover:bg-amber-600 text-indigo-950 font-black text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
             <i class="fa-solid fa-download"></i> Baixar Imagem (PNG)
           </button>
           <button onclick="copiarTextoCard()" class="bg-indigo-950 dark:bg-slate-900 hover:bg-indigo-900 text-white font-bold text-xs px-5 py-3 rounded-2xl transition flex items-center gap-2">
@@ -138,17 +139,17 @@
               <i class="fa-brands fa-whatsapp"></i> Compartilhar
             </button>
             <div class="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 p-1 rounded-xl text-xs font-bold">
-              <button onclick="ajustarFonteBiblia(1)" class="px-2.5 py-1 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-sm hover:bg-slate-200 dark:hover:bg-slate-600">A+</button>
-              <button onclick="ajustarFonteBiblia(-1)" class="px-2.5 py-1 rounded bg-white dark:bg-slate-800 text-slate-800 dark:text-white shadow-sm hover:bg-slate-200 dark:hover:bg-slate-600">A-</button>
+              <button onclick="ajustarFonteBiblia(1)" class="px-2.5 py-1 rounded bg-white dark:bg-slate-600 shadow-sm hover:bg-slate-200 dark:hover:bg-slate-500">A+</button>
+              <button onclick="ajustarFonteBiblia(-1)" class="px-2.5 py-1 rounded bg-white dark:bg-slate-600 shadow-sm hover:bg-slate-200 dark:hover:bg-slate-500">A-</button>
             </div>
           </div>
         </div>
 
-        <!-- SELEÇÃO DOS 66 LIVROS DA BÍBLIA -->
+        <!-- SELEÇÃO DOS 66 LIVROS -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
           <div>
-            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Livro da Bíblia</label>
-            <select id="biblia-livro" onchange="atualizarCapitulosERecarregar()" class="w-full p-2.5 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-600 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Livro da Bíblia</label>
+            <select id="biblia-livro" onchange="atualizarCapitulosERecarregar()" class="w-full p-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
               <optgroup label="Antigo Testamento (39 Livros)">
                 <option value="genesis">Gênesis</option>
                 <option value="exodus">Êxodo</option>
@@ -222,8 +223,8 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1">Capítulo</label>
-            <select id="biblia-capitulo" onchange="carregarTextoBiblico()" class="w-full p-2.5 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-600 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none">
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Capítulo</label>
+            <select id="biblia-capitulo" onchange="carregarTextoBiblico()" class="w-full p-2.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-xl text-xs font-semibold focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
               <!-- Gerado via JS -->
             </select>
           </div>
@@ -235,7 +236,7 @@
         </div>
 
         <!-- ÁREA DO TEXTO BÍBLICO -->
-        <div id="biblia-conteudo" class="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 leading-relaxed font-serif text-lg space-y-3 min-h-[250px]">
+        <div id="biblia-conteudo" class="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-100 leading-relaxed font-serif text-lg space-y-3 min-h-[250px]">
           <!-- Conteúdo inserido via JS -->
         </div>
 
@@ -253,7 +254,7 @@
       <!-- ABA PALAVRA DO DIA -->
       <section id="aba-palavra" class="hidden bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
         <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
-          <span class="bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 font-extrabold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full">
+          <span class="bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-300 font-extrabold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full">
             <i class="fa-regular fa-calendar-check mr-1"></i> Reflexão Diária
           </span>
           <span class="text-xs text-slate-400 font-medium"><i class="fa-regular fa-clock"></i> Leitura: 3 minutos</span>
@@ -263,10 +264,9 @@
           Descansando o Coração em Dias de Incerteza
         </h2>
 
-        <!-- Player de Áudio do Devocional -->
-        <div class="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl mb-6 flex items-center justify-between gap-4">
+        <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl mb-6 flex items-center justify-between gap-4">
           <div class="flex items-center gap-3">
-            <button onclick="toggleAudioDevocional()" id="btn-audio-devocional" class="w-11 h-11 bg-indigo-950 dark:bg-indigo-900 text-amber-400 rounded-full flex items-center justify-center text-base font-bold shadow-md hover:scale-105 transition">
+            <button onclick="toggleAudioDevocional()" id="btn-audio-devocional" class="w-11 h-11 bg-indigo-950 dark:bg-amber-500 text-amber-400 dark:text-indigo-950 rounded-full flex items-center justify-center text-base font-bold shadow-md hover:scale-105 transition">
               <i class="fa-solid fa-play" id="icon-audio-devocional"></i>
             </button>
             <div>
@@ -280,7 +280,7 @@
         <div class="prose dark:prose-invert text-slate-700 dark:text-slate-300 leading-relaxed space-y-4 font-sans text-base" id="texto-devocional">
           <p>Muitas vezes nos encontramos tentando controlar variáveis que estão completamente fora do nosso alcance. A ansiedade nada mais é do que o excesso de futuro ocupando o espaço da confiança no presente.</p>
           
-          <blockquote class="bg-indigo-50 dark:bg-slate-900 border-l-4 border-indigo-700 dark:border-amber-500 p-4 rounded-r-2xl text-slate-900 dark:text-slate-100 font-serif italic text-lg my-4">
+          <blockquote class="bg-indigo-50 dark:bg-slate-900/80 border-l-4 border-indigo-700 dark:border-amber-400 p-4 rounded-r-2xl text-slate-900 dark:text-slate-100 font-serif italic text-lg my-4">
             "Não andeis ansiosos por coisa alguma; antes as vossas petições sejam em tudo conhecidas diante de Deus pela oração e súplica, com ação de graças." — Filipenses 4:6
           </blockquote>
 
@@ -307,22 +307,22 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          <button onclick="carregarSOS('ansiedade')" class="p-3.5 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/50 rounded-2xl hover:bg-rose-100 dark:hover:bg-rose-900/50 text-rose-900 dark:text-rose-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
+          <button onclick="carregarSOS('ansiedade')" class="p-3.5 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-2xl hover:bg-rose-100 dark:hover:bg-rose-900/60 text-rose-900 dark:text-rose-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
             <span class="text-xl">😰</span> Ansiedade
           </button>
-          <button onclick="carregarSOS('luto')" class="p-3.5 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/50 rounded-2xl hover:bg-purple-100 dark:hover:bg-purple-900/50 text-purple-900 dark:text-purple-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
+          <button onclick="carregarSOS('luto')" class="p-3.5 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 rounded-2xl hover:bg-purple-100 dark:hover:bg-purple-900/60 text-purple-900 dark:text-purple-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
             <span class="text-xl">💔</span> Luto / Tristeza
           </button>
-          <button onclick="carregarSOS('financeiro')" class="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 rounded-2xl hover:bg-amber-100 dark:hover:bg-amber-900/50 text-amber-900 dark:text-amber-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
+          <button onclick="carregarSOS('financeiro')" class="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-2xl hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
             <span class="text-xl">📉</span> Finanças
           </button>
-          <button onclick="carregarSOS('decisao')" class="p-3.5 bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/50 rounded-2xl hover:bg-sky-100 dark:hover:bg-sky-900/50 text-sky-900 dark:text-sky-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
+          <button onclick="carregarSOS('decisao')" class="p-3.5 bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 rounded-2xl hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-900 dark:text-sky-200 font-bold text-xs text-center transition flex flex-col items-center gap-2">
             <span class="text-xl">🧭</span> Decisões
           </button>
         </div>
 
-        <div id="sos-resultado" class="p-6 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3 font-serif">
-          <p class="text-xs font-sans text-slate-400 dark:text-slate-500 italic text-center">Clique em um dos sentimentos acima para carregar o consolo bíblico...</p>
+        <div id="sos-resultado" class="p-6 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3 font-serif">
+          <p class="text-xs font-sans text-slate-400 italic text-center">Clique em um dos sentimentos acima para carregar o consolo bíblico...</p>
         </div>
       </section>
 
@@ -330,12 +330,12 @@
       <section id="aba-mural" class="hidden bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
         <div class="mb-6">
           <h2 class="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
-            <i class="fa-solid fa-hands-praying text-sky-600 dark:text-sky-400"></i> Mural da Fé & Oração
+            <i class="fa-solid fa-hands-praying text-sky-600"></i> Mural da Fé & Oração
           </h2>
           <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Deixe seu pedido de oração e interceda pelos motivos de outros irmãos.</p>
         </div>
 
-        <form onsubmit="postarPedido(event)" class="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 mb-6 space-y-3">
+        <form onsubmit="postarPedido(event)" class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 mb-6 space-y-3">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input type="text" id="mural-nome" placeholder="Seu Nome (ou Anônimo)" class="p-3 border border-slate-300 dark:border-slate-600 rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100">
             <input type="text" id="mural-cidade" placeholder="Sua Cidade / Estado" class="p-3 border border-slate-300 dark:border-slate-600 rounded-xl text-xs outline-none focus:ring-2 focus:ring-indigo-500 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100">
@@ -355,12 +355,12 @@
         <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Livros e Bíblias físicas recomendados para o seu estudo diário:</p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-900/60 flex gap-4 items-center">
-            <div class="w-16 h-20 bg-indigo-950 dark:bg-indigo-900 text-amber-400 rounded-xl flex items-center justify-center text-2xl font-bold shadow-md">
+          <div class="p-4 border border-slate-200 dark:border-slate-700 rounded-2xl bg-slate-50 dark:bg-slate-900/50 flex gap-4 items-center">
+            <div class="w-16 h-20 bg-indigo-950 text-amber-400 rounded-xl flex items-center justify-center text-2xl font-bold shadow-md">
               <i class="fa-solid fa-book-journal-whills"></i>
             </div>
             <div>
-              <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 uppercase">Recomendado</span>
+              <span class="text-[10px] font-bold text-amber-600 uppercase">Recomendado</span>
               <h3 class="font-bold text-sm text-slate-900 dark:text-white">Bíblia de Estudo NAA</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Notas explicativas e mapas.</p>
               <a href="https://amazon.com.br" target="_blank" class="inline-block mt-2.5 text-xs bg-amber-500 hover:bg-amber-600 text-indigo-950 font-bold px-3 py-1.5 rounded-xl transition">
@@ -401,43 +401,37 @@
   <footer class="bg-indigo-950 dark:bg-slate-950 text-indigo-300 dark:text-slate-400 text-xs py-8 border-t border-indigo-900 dark:border-slate-800 mt-auto">
     <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
       <p class="font-bold text-sm text-white">Portal Palavra & Vida © 2026</p>
-      <p class="text-slate-400 dark:text-slate-500">Aconselhamento, comunidade e Bíblia Sagrada online.</p>
+      <p class="text-slate-400">Aconselhamento, comunidade e Bíblia Sagrada online.</p>
     </div>
   </footer>
 
-  <!-- SCRIPT COMPLETO DE FUNCIONALIDADES -->
+  <!-- SCRIPT COMPLETO DE FUNCIONALIDADES E GERADOR DE IMAGEM CANVAS -->
   <script>
-    // 0. GERENCIAMENTO DE TEMA CLARO / ESCURO
-    function aplicarTemaInicial() {
-      const temaSalvo = localStorage.getItem('tema_preferido');
-      const root = document.getElementById('html-root');
-      const icone = document.getElementById('icone-tema');
-
-      if (temaSalvo === 'dark' || (!temaSalvo && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        root.classList.add('dark');
-        icone.className = 'fa-solid fa-sun text-amber-400';
-      } else {
-        root.classList.remove('dark');
-        icone.className = 'fa-solid fa-moon text-amber-400';
-      }
-    }
-
-    function alternarTema() {
-      const root = document.getElementById('html-root');
-      const icone = document.getElementById('icone-tema');
+    // 1. ALTERNADOR DE MODO CLARO / ESCURO
+    function alternarModoEscuro() {
+      const html = document.documentElement;
+      const icon = document.getElementById('icon-theme');
       
-      if (root.classList.contains('dark')) {
-        root.classList.remove('dark');
-        localStorage.setItem('tema_preferido', 'light');
-        icone.className = 'fa-solid fa-moon text-amber-400';
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        icon.className = 'fa-solid fa-moon';
+        localStorage.setItem('theme', 'light');
       } else {
-        root.classList.add('dark');
-        localStorage.setItem('tema_preferido', 'dark');
-        icone.className = 'fa-solid fa-sun text-amber-400';
+        html.classList.add('dark');
+        icon.className = 'fa-solid fa-sun';
+        localStorage.setItem('theme', 'dark');
       }
     }
 
-    // BANCO DE VERSÍCULOS PARA O GERADOR DE STORIES
+    function carregarTemaSalvo() {
+      const temaSalvo = localStorage.getItem('theme');
+      if (temaSalvo === 'dark' || (!temaSalvo && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('icon-theme').className = 'fa-solid fa-sun';
+      }
+    }
+
+    // 2. BANCO DE VERSÍCULOS PARA O CARDS
     const listaVersiculosCard = [
       { texto: "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre.", ref: "Salmos 121:8" },
       { texto: "O Senhor é o meu pastor; nada me faltará.", ref: "Salmos 23:1" },
@@ -450,7 +444,7 @@
     ];
 
     function sortearNovoVersiculoCard() {
-      const cardBox = document.getElementById('card-para-download');
+      const cardBox = document.getElementById('card-preview-box');
       cardBox.classList.add('opacity-0', 'scale-95');
 
       setTimeout(() => {
@@ -461,64 +455,86 @@
       }, 200);
     }
 
-    // NATIVO NAVEGADOR: GERADOR DE IMAGEM SVG -> PNG (Sua chave para o download instantâneo sem erros)
-    function gerarEBaixarImagem() {
+    // 3. GERADOR E DOWNLOAD DE IMAGEM PNG NATIVO VIA CANVAS (RES. 1080x1920 NET/STORIES)
+    function gerarEBaixarImagemNativa() {
       const texto = document.getElementById('card-versiculo-texto').innerText;
       const ref = document.getElementById('card-versiculo-ref').innerText;
 
-      // Montagem do SVG estilizado exatamente como o Card
-      const svgData = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="800" viewBox="0 0 600 800">
-          <defs>
-            <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#090d16"/>
-              <stop offset="50%" stop-color="#1e1b4b"/>
-              <stop offset="100%" stop-color="#0f172a"/>
-            </linearGradient>
-          </defs>
-          <rect width="600" height="800" rx="32" fill="url(#bg)"/>
-          <rect x="20" y="20" width="560" height="760" rx="24" fill="none" stroke="#4338ca" stroke-opacity="0.4" stroke-width="2"/>
-          
-          <text x="300" y="110" font-family="sans-serif" font-size="16" font-weight="bold" fill="#fbbf24" text-anchor="middle" letter-spacing="4">✨ PALAVRA &amp; VIDA</text>
-          
-          <foreignObject x="50" y="220" width="500" height="360">
-            <div xmlns="http://www.w3.org/1999/xhtml" style="color: #e0e7ff; font-family: Georgia, serif; font-size: 28px; font-style: italic; text-align: center; line-height: 1.6; display: flex; align-items: center; justify-content: center; height: 100%;">
-              ${texto}
-            </div>
-          </foreignObject>
-          
-          <text x="300" y="640" font-family="sans-serif" font-size="18" font-weight="bold" fill="#fbbf24" text-anchor="middle" letter-spacing="3">${ref}</text>
-          
-          <line x1="150" y1="700" x2="450" y2="700" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1"/>
-          <text x="300" y="735" font-family="sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle" letter-spacing="3">PALAVRAEVIDA.COM.BR</text>
-        </svg>
-      `;
-
       const canvas = document.createElement('canvas');
-      canvas.width = 1200;
-      canvas.height = 1600;
       const ctx = canvas.getContext('2d');
+      canvas.width = 1080;
+      canvas.height = 1920;
 
-      const img = new Image();
-      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(svgBlob);
+      // Fundo Gradiente Indigo Escuro
+      const gradient = ctx.createLinearGradient(0, 0, 1080, 1920);
+      gradient.addColorStop(0, '#0f172a');
+      gradient.addColorStop(0.5, '#1e1b4b');
+      gradient.addColorStop(1, '#020617');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, 1080, 1920);
 
-      img.onload = function() {
-        ctx.drawImage(img, 0, 0, 1200, 1600);
-        URL.revokeObjectURL(url);
+      // Moldura Dourada
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.4)';
+      ctx.lineWidth = 12;
+      ctx.strokeRect(60, 60, 960, 1800);
 
-        const a = document.createElement('a');
-        a.download = 'versiculo-stories.png';
-        a.href = canvas.toDataURL('image/png');
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      };
+      // Título do Topo
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 36px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('✨ PALAVRA & VIDA', 540, 240);
 
-      img.src = url;
+      // Texto do Versículo (Com quebra automática de linha)
+      ctx.fillStyle = '#f8fafc';
+      ctx.font = 'italic 52px serif';
+
+      const maxLargura = 840;
+      const palavras = texto.split(' ');
+      let linha = '';
+      let linhas = [];
+
+      for (let n = 0; n < palavras.length; n++) {
+        let linhaTeste = linha + palavras[n] + ' ';
+        let me = ctx.measureText(linhaTeste);
+        if (me.width > maxLargura && n > 0) {
+          linhas.push(linha);
+          linha = palavras[n] + ' ';
+        } else {
+          linha = linhaTeste;
+        }
+      }
+      linhas.push(linha);
+
+      let yInicial = 960 - (linhas.length * 35);
+      for (let k = 0; k < linhas.length; k++) {
+        ctx.fillText(linhas[k], 540, yInicial + (k * 80));
+      }
+
+      // Referência Bíblica
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 44px sans-serif';
+      ctx.fillText(ref.toUpperCase(), 540, yInicial + (linhas.length * 80) + 120);
+
+      // Rodapé com o Marca/Domínio
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '32px sans-serif';
+      ctx.fillText('palavraevida.com.br', 540, 1720);
+
+      // Executa o Download da Imagem PNG
+      const link = document.createElement('a');
+      link.download = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     }
 
-    // QUANTIDADE DE CAPÍTULOS DOS 66 LIVROS DA BÍBLIA
+    function copiarTextoCard() {
+      const v = document.getElementById('card-versiculo-texto').innerText;
+      const r = document.getElementById('card-versiculo-ref').innerText;
+      navigator.clipboard.writeText(`${v} - ${r}\n\nVia: palavraevida.com.br`);
+      alert('Texto do versículo copiado com sucesso!');
+    }
+
+    // 4. QUANTIDADE DE CAPÍTULOS DA BÍBLIA
     const totalCapitulos = {
       genesis: 50, exodus: 40, leviticus: 27, numbers: 36, deuteronomy: 34,
       joshua: 24, judges: 21, ruth: 4, "1samuel": 31, "2samuel": 24,
@@ -536,7 +552,6 @@
       jude: 1, revelation: 22
     };
 
-    // 1. TROCA DE ABAS
     function mudarAba(aba) {
       ['estudio', 'biblia', 'palavra', 'sos', 'mural', 'loja'].forEach(a => {
         document.getElementById(`aba-${a}`).classList.add('hidden');
@@ -550,7 +565,6 @@
       }
     }
 
-    // 2. NAVEGAÇÃO BÍBLICA
     function atualizarCapitulosERecarregar() {
       const livro = document.getElementById('biblia-livro').value;
       const selectCapitulo = document.getElementById('biblia-capitulo');
@@ -616,7 +630,6 @@
       document.getElementById('biblia-conteudo').style.fontSize = `${tamanhoFonteBiblia}px`;
     }
 
-    // 3. COMPARTILHAMENTO
     function compartilharVersiculoIndividual(livro, capitulo, versiculo, texto) {
       const mensagem = `"${texto}" — ${livro} ${capitulo}:${versiculo}\n\nLeia mais no Portal Palavra & Vida: palavraevida.com.br`;
       if (navigator.share) {
@@ -643,7 +656,6 @@
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, '_blank');
     }
 
-    // 4. ÁUDIO DA BÍBLIA E DEVOCIONAL
     let falandoBiblia = false;
     function ouvirCapituloBiblia() {
       const btnText = document.getElementById('lbl-audio-biblia');
@@ -687,14 +699,6 @@
       }
     }
 
-    function copiarTextoCard() {
-      const v = document.getElementById('card-versiculo-texto').innerText;
-      const r = document.getElementById('card-versiculo-ref').innerText;
-      navigator.clipboard.writeText(`${v} - ${r}\n\nVia: palavraevida.com.br`);
-      alert('Texto do versículo copiado com sucesso!');
-    }
-
-    // 5. GAMIFICAÇÃO, SOS E MURAL DA FÉ
     function concluirLeitura() {
       let streak = parseInt(localStorage.getItem('user_streak') || '1') + 1;
       localStorage.setItem('user_streak', streak);
@@ -720,13 +724,13 @@
     function renderizarMural() {
       const container = document.getElementById('mural-lista');
       container.innerHTML = pedidos.map((p, idx) => `
-        <div class="p-4 bg-slate-50 dark:bg-slate-900/60 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+        <div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
           <div class="flex justify-between items-center">
             <div>
               <span class="font-bold text-xs text-slate-900 dark:text-white">${p.nome}</span>
-              <span class="text-[10px] text-slate-400 dark:text-slate-500 ml-2">${p.cidade}</span>
+              <span class="text-[10px] text-slate-400 ml-2">${p.cidade}</span>
             </div>
-            <button onclick="orarPor(${idx})" class="text-[11px] bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-amber-400 font-bold px-3 py-1 rounded-full border border-indigo-200 dark:border-slate-700 hover:bg-indigo-100 dark:hover:bg-slate-700 transition">
+            <button onclick="orarPor(${idx})" class="text-[11px] bg-indigo-50 dark:bg-slate-800 text-indigo-700 dark:text-amber-400 font-bold px-3 py-1 rounded-full border border-indigo-200 dark:border-slate-700 hover:bg-indigo-100 transition">
               <i class="fa-solid fa-hands-praying"></i> Estou Orando (${p.orantes})
             </button>
           </div>
@@ -753,7 +757,7 @@
 
     // INICIALIZAÇÃO DA PÁGINA
     window.onload = () => {
-      aplicarTemaInicial();
+      carregarTemaSalvo();
       renderizarMural();
     };
   </script>
