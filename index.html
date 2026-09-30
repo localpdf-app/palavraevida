@@ -90,7 +90,7 @@
       <!-- GERADOR DE STORIES -->
       <section id="aba-estudio" class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 text-center transition-colors">
         <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-2">Gerador de Versículos para Stories</h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Crie e baixe um card formatado em alta definição para postar no Instagram ou WhatsApp:</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Crie, baixe ou compartilhe um card em alta definição para postar no Instagram ou WhatsApp:</p>
 
         <!-- PRÉ-VISUALIZAÇÃO DO CARD -->
         <div id="card-preview-box" class="max-w-xs sm:max-w-sm mx-auto bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-900 text-white p-8 rounded-3xl shadow-2xl space-y-6 my-4 border border-indigo-700/50 relative overflow-hidden transition-all duration-300">
@@ -107,13 +107,16 @@
           </div>
         </div>
 
-        <!-- BOTEÕS DE AÇÃO -->
+        <!-- BOTÕES DE AÇÃO SEPARADOS -->
         <div class="flex flex-wrap justify-center gap-3 mt-6">
           <button onclick="sortearNovoVersiculoCard()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
             <i class="fa-solid fa-dice text-amber-400"></i> Gerar Outro Versículo
           </button>
-          <button onclick="gerarEBaixarImagemNativa()" class="bg-amber-500 hover:bg-amber-600 text-indigo-950 font-black text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
-            <i class="fa-solid fa-download"></i> Salvar / Baixar Imagem
+          <button onclick="baixarImagemDireto()" class="bg-amber-500 hover:bg-amber-600 text-indigo-950 font-black text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-download"></i> Baixar Imagem (PNG)
+          </button>
+          <button onclick="compartilharImagemCard()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-share-nodes"></i> Compartilhar Card
           </button>
           <button onclick="copiarTextoCard()" class="bg-indigo-950 dark:bg-slate-900 hover:bg-indigo-900 text-white font-bold text-xs px-5 py-3 rounded-2xl transition flex items-center gap-2">
             <i class="fa-solid fa-copy"></i> Copiar Texto
@@ -405,7 +408,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT COMPLETO COM COMPATIBILIDADE IPHONE / SAFARI E CANVAS PROPORCIONAL -->
+  <!-- SCRIPT COMPLETO COM CANVAS DE FONTE GRANDE + DOWNLOAD E COMPARTILHAR SEPARADOS -->
   <script>
     // 1. ALTERNADOR DE MODO CLARO / ESCURO
     function alternarModoEscuro() {
@@ -455,15 +458,14 @@
       }, 200);
     }
 
-    // 3. GERADOR DE IMAGEM PROPORCIONAL E COMPATÍVEL COM IPHONE/SAFARI
-    async function gerarEBaixarImagemNativa() {
+    // 3. DESENHO DO CANVAS COM FONTE GRANDE (800x650)
+    function criarCanvasCardHD() {
       const texto = document.getElementById('card-versiculo-texto').innerText;
       const ref = document.getElementById('card-versiculo-ref').innerText;
 
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       
-      // Dimensões proporcionais HD exatas do card
       canvas.width = 900;
       canvas.height = 750;
 
@@ -496,15 +498,15 @@
 
       // Topo
       ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 24px sans-serif';
+      ctx.font = 'bold 26px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('✨ PALAVRA & VIDA', 450, 100);
+      ctx.fillText('✨ PALAVRA & VIDA', 450, 95);
 
-      // Texto do Versículo
+      // Texto do Versículo - FONTE GRANDE
       ctx.fillStyle = '#f8fafc';
-      ctx.font = 'italic 44px serif';
+      ctx.font = 'italic 58px serif';
 
-      const maxLargura = 740;
+      const maxLargura = 760;
       const palavras = texto.split(' ');
       let linha = '';
       let linhas = [];
@@ -521,9 +523,9 @@
       }
       linhas.push(linha);
 
-      let espacamentoLinhas = 60;
+      let espacamentoLinhas = 72;
       let alturaTotalTexto = linhas.length * espacamentoLinhas;
-      let yInicial = 380 - (alturaTotalTexto / 2);
+      let yInicial = 370 - (alturaTotalTexto / 2);
 
       for (let k = 0; k < linhas.length; k++) {
         ctx.fillText(linhas[k].trim(), 450, yInicial + (k * espacamentoLinhas));
@@ -531,8 +533,8 @@
 
       // Referência Bíblica
       ctx.fillStyle = '#f59e0b';
-      ctx.font = 'bold 32px sans-serif';
-      ctx.fillText(ref.toUpperCase(), 450, yInicial + alturaTotalTexto + 50);
+      ctx.font = 'bold 36px sans-serif';
+      ctx.fillText(ref.toUpperCase(), 450, yInicial + alturaTotalTexto + 55);
 
       // Divisor
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
@@ -544,47 +546,50 @@
 
       // Rodapé Domínio
       ctx.fillStyle = '#94a3b8';
-      ctx.font = '20px sans-serif';
+      ctx.font = '22px sans-serif';
       ctx.fillText('palavraevida.com.br', 450, 690);
 
-      // ESTRATÉGIA DE SALVAMENTO PARA IPHONE (iOS / SAFARI) E OUTROS DISPOSITIVOS
+      return { canvas, ref, texto };
+    }
+
+    // AÇÃO 1: BAIXAR IMAGEM DIRETO
+    function baixarImagemDireto() {
+      const { canvas, ref } = criarCanvasCardHD();
+      const nomeArquivo = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
+      
+      const link = document.createElement('a');
+      link.download = nomeArquivo;
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // AÇÃO 2: COMPARTILHAR IMAGEM (WEB SHARE API)
+    async function compartilharImagemCard() {
+      const { canvas, ref, texto } = criarCanvasCardHD();
+      const nomeArquivo = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
+
       canvas.toBlob(async (blob) => {
-        const nomeArquivo = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
         const file = new File([blob], nomeArquivo, { type: 'image/png' });
 
-        // 1. Tenta acionar o Web Share nativo do iOS/Android para salvar na Galeria ou enviar
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
               files: [file],
-              title: 'Versículo da Bíblia',
+              title: 'Versículo - Palavra & Vida',
               text: `${texto} - ${ref} (palavraevida.com.br)`
             });
-            return;
           } catch (err) {
-            // Se o usuário cancelar o menu de compartilhamento, encerra sem erro
-            if (err.name === 'AbortError') return;
+            if (err.name !== 'AbortError') {
+              baixarImagemDireto();
+            }
           }
+        } else {
+          // Fallback para quem está no PC sem menu de compartilhamento
+          baixarImagemDireto();
+          alert('Imagem baixada! Você já pode enviá-la para o seu aplicativo desejado.');
         }
-
-        // 2. Download Tradicional para Desktop (Windows / Mac) e Android
-        const imageURL = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.download = nomeArquivo;
-        link.href = imageURL;
-        
-        // Dispara o download
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Fallback especial para navegadores mobile legados (Abre a imagem em nova aba para segurar e salvar)
-        setTimeout(() => {
-          if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            window.open(imageURL, '_blank');
-          }
-        }, 300);
-
       }, 'image/png');
     }
 
