@@ -97,17 +97,17 @@
           <div class="text-amber-400 font-serif text-xs font-bold tracking-widest uppercase">✨ PALAVRA & VIDA</div>
           
           <blockquote id="card-versiculo-texto" class="text-lg sm:text-xl font-serif italic leading-relaxed text-indigo-100">
-            "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre."
+            "Carregando versículo de hoje..."
           </blockquote>
           
-          <div id="card-versiculo-ref" class="text-xs font-bold tracking-widest uppercase text-amber-400">Salmos 121:8</div>
+          <div id="card-versiculo-ref" class="text-xs font-bold tracking-widest uppercase text-amber-400">---</div>
           
           <div class="text-[9px] text-slate-400 border-t border-white/20 pt-3 tracking-widest uppercase">
             palavraevida.com.br
           </div>
         </div>
 
-        <!-- BOTÕES DE AÇÃO LIMPOS -->
+        <!-- BOTÕES DE AÇÃO -->
         <div class="flex flex-wrap justify-center gap-3 mt-6">
           <button onclick="sortearNovoVersiculoCard()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
             <i class="fa-solid fa-dice text-amber-400"></i> Gerar Outro Versículo
@@ -251,17 +251,17 @@
         </div>
       </section>
 
-      <!-- ABA PALAVRA DO DIA -->
+      <!-- ABA PALAVRA DO DIA (DINÂMICA POR DIA DO MÊS) -->
       <section id="aba-palavra" class="hidden bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
         <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
           <span class="bg-amber-100 dark:bg-amber-900/40 text-amber-900 dark:text-amber-300 font-extrabold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full">
-            <i class="fa-regular fa-calendar-check mr-1"></i> Reflexão Diária
+            <i class="fa-regular fa-calendar-check mr-1"></i> Reflexão de Hoje (<span id="devocional-data">--/--</span>)
           </span>
           <span class="text-xs text-slate-400 font-medium"><i class="fa-regular fa-clock"></i> Leitura: 3 minutos</span>
         </div>
 
-        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4 leading-tight">
-          Descansando o Coração em Dias de Incerteza
+        <h2 id="devocional-titulo" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4 leading-tight">
+          Carregando reflexão...
         </h2>
 
         <div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 p-4 rounded-2xl mb-6 flex items-center justify-between gap-4">
@@ -278,13 +278,7 @@
         </div>
 
         <div class="prose dark:prose-invert text-slate-700 dark:text-slate-300 leading-relaxed space-y-4 font-sans text-base" id="texto-devocional">
-          <p>Muitas vezes nos encontramos tentando controlar variáveis que estão completamente fora do nosso alcance. A ansiedade nada mais é do que o excesso de futuro ocupando o espaço da confiança no presente.</p>
-          
-          <blockquote class="bg-indigo-50 dark:bg-slate-900/80 border-l-4 border-indigo-700 dark:border-amber-400 p-4 rounded-r-2xl text-slate-900 dark:text-slate-100 font-serif italic text-lg my-4">
-            "Não andeis ansiosos por coisa alguma; antes as vossas petições sejam em tudo conhecidas diante de Deus pela oração e súplica, com ação de graças." — Filipenses 4:6
-          </blockquote>
-
-          <p>Entregar uma preocupação a Deus não significa cruzar os braços, mas entender onde termina a nossa capacidade e onde começa a ação soberana do Pai. Hoje, faça uma pausa consciente e declare em oração que o seu futuro está guardado.</p>
+          <!-- Inserido dinamicamente via JS -->
         </div>
 
         <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-700 flex flex-wrap justify-between items-center gap-4">
@@ -405,7 +399,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT COMPLETO DE FUNCIONALIDADES -->
+  <!-- SCRIPT COM RENOVAÇÃO DIÁRIA AUTOMÁTICA -->
   <script>
     // 1. ALTERNADOR DE MODO CLARO / ESCURO
     function alternarModoEscuro() {
@@ -431,7 +425,7 @@
       }
     }
 
-    // 2. BANCO DE VERSÍCULOS
+    // 2. BANCO DE VERSÍCULOS DO STORIES
     const listaVersiculosCard = [
       { texto: "O Senhor guardará a tua saída e a tua entrada, desde agora e para sempre.", ref: "Salmos 121:8" },
       { texto: "O Senhor é o meu pastor; nada me faltará.", ref: "Salmos 23:1" },
@@ -440,8 +434,21 @@
       { texto: "Deixo-vos a paz, a minha paz vos dou; não vo-la dou como o mundo a dá.", ref: "João 14:27" },
       { texto: "Os que esperam no Senhor renovarão as suas forças; subirão com asas como águias.", ref: "Isaías 40:31" },
       { texto: "Sabemos que todas as coisas cooperam para o bem daqueles que amam a Deus.", ref: "Romanos 8:28" },
-      { texto: "Busquem primeiro o Reino de Deus e a sua justiça, e todas estas coisas lhes serão acrescentadas.", ref: "Mateus 6:33" }
+      { texto: "Busquem primeiro o Reino de Deus e a sua justiça, e todas estas coisas lhes serão acrescentadas.", ref: "Mateus 6:33" },
+      { texto: "Não temas, porque eu sou contigo; não te assombres, porque eu sou o teu Deus.", ref: "Isaías 41:10" },
+      { texto: "Lâmpada para os meus pés é tua palavra e luz, para o meu caminho.", ref: "Salmos 119:105" }
     ];
+
+    // Carrega o versículo inicial baseado no dia do ano
+    function carregarVersiculoInicialDoDia() {
+      const hoje = new Date();
+      const diaDoAno = Math.floor((hoje - new Date(hoje.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+      const indice = diaDoAno % listaVersiculosCard.length;
+      
+      const v = listaVersiculosCard[indice];
+      document.getElementById('card-versiculo-texto').innerText = `"${v.texto}"`;
+      document.getElementById('card-versiculo-ref').innerText = v.ref;
+    }
 
     function sortearNovoVersiculoCard() {
       const cardBox = document.getElementById('card-preview-box');
@@ -455,7 +462,59 @@
       }, 200);
     }
 
-    // 3. DESENHO DO CANVAS HD PARA O COMPARTILHAMENTO
+    // 3. BANCO DE DEVOCIONAIS DIÁRIOS (RENOVAÇÃO AUTOMÁTICA POR DATA)
+    const bancoDevocionais = [
+      {
+        titulo: "Descansando o Coração em Dias de Incerteza",
+        verso: "Não andeis ansiosos por coisa alguma; antes as vossas petições sejam em tudo conhecidas diante de Deus.",
+        ref: "Filipenses 4:6",
+        p1: "Muitas vezes nos encontramos tentando controlar variáveis que estão completamente fora do nosso alcance. A ansiedade nada mais é do que o excesso de futuro ocupando o espaço da confiança no presente.",
+        p2: "Entregar uma preocupação a Deus não significa cruzar os braços, mas entender onde termina a nossa capacidade e onde começa a ação soberana do Pai. Hoje, faça uma pausa consciente e declare em oração que o seu futuro está guardado."
+      },
+      {
+        titulo: "A Renovação das Suas Forças",
+        verso: "Mas os que esperam no Senhor renovarão as suas forças; subirão com asas como águias.",
+        ref: "Isaías 40:31",
+        p1: "O cansaço físico e emocional é um sinal natural de que fomos além dos nossos limites. No entanto, a Bíblia nos lembra de que a fonte da nossa energia espiritual não vem da nossa força de vontade, mas da nossa espera no Senhor.",
+        p2: "Esperar não é passividade; é colocar a sua expectativa na pessoa certa. Quando você decide confiar, Deus renova a sua mente e lhe dá forças para continuar caminhando mesmo em subidas íngremes."
+      },
+      {
+        titulo: "Guiado pela Luz da Verdade",
+        verso: "Lâmpada para os meus pés é tua palavra e luz, para o meu caminho.",
+        ref: "Salmos 119:105",
+        p1: "Em caminhos escuros, uma lâmpada antiga não iluminava quilômetros à frente, mas apenas o próximo passo. De igual modo, Deus muitas vezes nos mostra exatamente o que fazer hoje, e não todo o nosso futuro de uma vez.",
+        p2: "Confie na direção de Deus para as decisões do dia de hoje. A Palavra dEle é suficiente para lhe dar sabedoria em cada escolha, por menor que pareça."
+      },
+      {
+        titulo: "O Cuidado Diário do Pastor",
+        verso: "O Senhor é o meu pastor; nada me faltará.",
+        ref: "Salmos 23:1",
+        p1: "A afirmação de Davi não é uma promessa de luxo, mas uma certeza de suprimento. Uma ovelha sob os cuidados de um bom pastor tem tudo o que necessita para viver em paz e segurança.",
+        p2: "Deus conhece as suas necessidades reais antes mesmo de você as expressar. Descanse no cuidado de quem tem o controle do universo em Suas mãos."
+      }
+    ];
+
+    function carregarDevocionalDoDia() {
+      const hoje = new Date();
+      const diaDoMes = hoje.getDate();
+      const dataFormatada = `${String(diaDoMes).padStart(2, '0')}/${String(hoje.getMonth() + 1).padStart(2, '0')}`;
+      
+      // Escolhe o devocional com base no dia
+      const d = bancoDevocionais[(diaDoMes - 1) % bancoDevocionais.length];
+
+      document.getElementById('devocional-data').innerText = dataFormatada;
+      document.getElementById('devocional-titulo').innerText = d.titulo;
+
+      document.getElementById('texto-devocional').innerHTML = `
+        <p>${d.p1}</p>
+        <blockquote class="bg-indigo-50 dark:bg-slate-900/80 border-l-4 border-indigo-700 dark:border-amber-400 p-4 rounded-r-2xl text-slate-900 dark:text-slate-100 font-serif italic text-lg my-4">
+          "${d.verso}" — ${d.ref}
+        </blockquote>
+        <p>${d.p2}</p>
+      `;
+    }
+
+    // 4. DESENHO DO CANVAS HD PARA COMPARTILHAMENTO
     function criarCanvasCardHD() {
       const texto = document.getElementById('card-versiculo-texto').innerText;
       const ref = document.getElementById('card-versiculo-ref').innerText;
@@ -466,14 +525,12 @@
       canvas.width = 900;
       canvas.height = 750;
 
-      // Fundo Gradiente Indigo Escuro
       const gradient = ctx.createLinearGradient(0, 0, 900, 750);
       gradient.addColorStop(0, '#0f172a');
       gradient.addColorStop(0.5, '#1e1b4b');
       gradient.addColorStop(1, '#0f172a');
       ctx.fillStyle = gradient;
 
-      // Card Arredondado
       const r = 40;
       ctx.beginPath();
       ctx.moveTo(r, 0);
@@ -488,18 +545,15 @@
       ctx.closePath();
       ctx.fill();
 
-      // Moldura Dourada
       ctx.strokeStyle = 'rgba(245, 158, 11, 0.3)';
       ctx.lineWidth = 4;
       ctx.stroke();
 
-      // Topo
       ctx.fillStyle = '#f59e0b';
       ctx.font = 'bold 26px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('✨ PALAVRA & VIDA', 450, 95);
 
-      // Versículo - Fonte Grande
       ctx.fillStyle = '#f8fafc';
       ctx.font = 'italic 58px serif';
 
@@ -528,12 +582,10 @@
         ctx.fillText(linhas[k].trim(), 450, yInicial + (k * espacamentoLinhas));
       }
 
-      // Referência
       ctx.fillStyle = '#f59e0b';
       ctx.font = 'bold 36px sans-serif';
       ctx.fillText(ref.toUpperCase(), 450, yInicial + alturaTotalTexto + 55);
 
-      // Divisor
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -541,7 +593,6 @@
       ctx.lineTo(750, 650);
       ctx.stroke();
 
-      // Rodapé
       ctx.fillStyle = '#94a3b8';
       ctx.font = '22px sans-serif';
       ctx.fillText('palavraevida.com.br', 450, 690);
@@ -549,7 +600,6 @@
       return { canvas, ref, texto };
     }
 
-    // AÇÃO ÚNICA: COMPARTILHAR CARD (ONDE PERMITE SALVAR NA GALERIA OU ENVIAR PARA REDES SOCIAIS)
     async function compartilharImagemCard() {
       const { canvas, ref, texto } = criarCanvasCardHD();
       const nomeArquivo = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
@@ -564,11 +614,8 @@
               title: 'Versículo - Palavra & Vida',
               text: `${texto} - ${ref} (palavraevida.com.br)`
             });
-          } catch (err) {
-            // Se o usuário fechar a aba de compartilhar, encerra sem mensagens
-          }
+          } catch (err) {}
         } else {
-          // Fallback para computadores
           const imageURL = URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.download = nomeArquivo;
@@ -587,7 +634,7 @@
       alert('Texto do versículo copiado com sucesso!');
     }
 
-    // 4. BÍBLIA COMPLETA (66 LIVROS)
+    // 5. BÍBLIA COMPLETA
     const totalCapitulos = {
       genesis: 50, exodus: 40, leviticus: 27, numbers: 36, deuteronomy: 34,
       joshua: 24, judges: 21, ruth: 4, "1samuel": 31, "2samuel": 24,
@@ -705,7 +752,8 @@
     }
 
     function compartilharDevocional() {
-      const mensagem = `Confira a Reflexão de hoje no Portal Palavra & Vida: "Descansando o Coração em Dias de Incerteza"\n\nAcesse: palavraevida.com.br`;
+      const titulo = document.getElementById('devocional-titulo').innerText;
+      const mensagem = `Confira a Reflexão de hoje no Portal Palavra & Vida: "${titulo}"\n\nAcesse: palavraevida.com.br`;
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(mensagem)}`, '_blank');
     }
 
@@ -759,11 +807,32 @@
       alert('Parabéns! Leitura concluída e sua ofensiva diária aumentou! 🔥');
     }
 
+    // SOS BÍBLICO EXPANDIDO
     const bancoSOS = {
-      ansiedade: "<b>Filipenses 4:6-7:</b> 'Não andeis ansiosos por coisa alguma; antes as vossas petições sejam em tudo conhecidas diante de Deus pela oração e súplica, com ação de graças. E a paz de Deus, que excede todo o entendimento, guardará os vossos corações e os vossos pensamentos em Cristo Jesus.'",
-      luto: "<b>Salmos 34:18:</b> 'Perto está o Senhor dos que têm o coração quebrantado, e salva os contritos de espírito.'",
-      financeiro: "<b>Mateus 6:33:</b> 'Mas, buscai primeiro o reino de Deus, e a sua justiça, e todas estas coisas vos serão acrescentadas.'",
-      decisao: "<b>Provérbios 3:5-6:</b> 'Confia no Senhor de todo o teu coração, e não te estribes no teu próprio entendimento. Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas.'"
+      ansiedade: `
+        <div class="space-y-3">
+          <p><b>Filipenses 4:6-7:</b> 'Não andeis ansiosos por coisa alguma; antes as vossas petições sejam em tudo conhecidas diante de Deus pela oração e súplica, com ação de graças. E a paz de Deus, que excede todo o entendimento, guardará os vossos corações e os vossos pensamentos em Cristo Jesus.'</p>
+          <p><b>1 Pedro 5:7:</b> 'Lançando sobre ele toda a vossa ansiedade, porque ele tem cuidado de vós.'</p>
+        </div>
+      `,
+      luto: `
+        <div class="space-y-3">
+          <p><b>Salmos 34:18:</b> 'Perto está o Senhor dos que têm o coração quebrantado, e salva os contritos de espírito.'</p>
+          <p><b>Mateus 5:4:</b> 'Bem-aventurados os que choram, porque eles serão consolados.'</p>
+        </div>
+      `,
+      financeiro: `
+        <div class="space-y-3">
+          <p><b>Mateus 6:33:</b> 'Mas, buscai primeiro o reino de Deus, e a sua justiça, e todas estas coisas vos serão acrescentadas.'</p>
+          <p><b>Filipenses 4:19:</b> 'O meu Deus, segundo as suas riquezas, suprirá todas as vossas necessidades em glória, por Cristo Jesus.'</p>
+        </div>
+      `,
+      decisao: `
+        <div class="space-y-3">
+          <p><b>Provérbios 3:5-6:</b> 'Confia no Senhor de todo o teu coração, e não te estribes no teu próprio entendimento. Reconhece-o em todos os teus caminhos, e ele endireitará as tuas veredas.'</p>
+          <p><b>Tiago 1:5:</b> 'E, se algum de vós tem falta de sabedoria, peça-a a Deus, que a todos dá liberalmente.'</p>
+        </div>
+      `
     };
 
     function carregarSOS(chave) {
@@ -811,6 +880,8 @@
     // INICIALIZAÇÃO DA PÁGINA
     window.onload = () => {
       carregarTemaSalvo();
+      carregarVersiculoInicialDoDia();
+      carregarDevocionalDoDia();
       renderizarMural();
     };
   </script>
