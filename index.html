@@ -107,7 +107,7 @@
           </div>
         </div>
 
-        <!-- BOTÕES DE AÇÃO SEPARADOS -->
+        <!-- BOTÕES DE AÇÃO -->
         <div class="flex flex-wrap justify-center gap-3 mt-6">
           <button onclick="sortearNovoVersiculoCard()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
             <i class="fa-solid fa-dice text-amber-400"></i> Gerar Outro Versículo
@@ -401,6 +401,27 @@
 
   </main>
 
+  <!-- MODAL DE VISUALIZAÇÃO E DOWNLOAD PARA SAFARI / IPHONE -->
+  <div id="ios-image-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex flex-col items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 p-4 sm:p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl relative">
+      <button onclick="fecharModalIos()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-lg p-2">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 class="text-sm font-bold text-amber-400 flex items-center justify-center gap-2">
+        <i class="fa-brands fa-apple text-base"></i> Salvar Imagem no iPhone
+      </h3>
+      <p class="text-xs text-slate-300">Toque e segure sobre a imagem abaixo e escolha <b class="text-white">"Adicionar a Fotos"</b>:</p>
+      
+      <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-800">
+        <img id="ios-modal-img" src="" alt="Card Bíblico" class="w-full h-auto block">
+      </div>
+
+      <button onclick="fecharModalIos()" class="w-full bg-amber-500 text-indigo-950 font-bold text-xs py-3 rounded-xl">
+        Concluído
+      </button>
+    </div>
+  </div>
+
   <footer class="bg-indigo-950 dark:bg-slate-950 text-indigo-300 dark:text-slate-400 text-xs py-8 border-t border-indigo-900 dark:border-slate-800 mt-auto">
     <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
       <p class="font-bold text-sm text-white">Portal Palavra & Vida © 2026</p>
@@ -408,7 +429,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT COMPLETO COM CANVAS DE FONTE GRANDE + DOWNLOAD E COMPARTILHAR SEPARADOS -->
+  <!-- SCRIPT COMPLETO COM SUPORTE UNIVERSAL PARA IPHONE (SAFARI) -->
   <script>
     // 1. ALTERNADOR DE MODO CLARO / ESCURO
     function alternarModoEscuro() {
@@ -458,7 +479,7 @@
       }, 200);
     }
 
-    // 3. DESENHO DO CANVAS COM FONTE GRANDE (800x650)
+    // 3. DESENHO DO CANVAS HD
     function criarCanvasCardHD() {
       const texto = document.getElementById('card-versiculo-texto').innerText;
       const ref = document.getElementById('card-versiculo-ref').innerText;
@@ -476,7 +497,7 @@
       gradient.addColorStop(1, '#0f172a');
       ctx.fillStyle = gradient;
 
-      // Card com Bordas Arredondadas
+      // Card Arredondado
       const r = 40;
       ctx.beginPath();
       ctx.moveTo(r, 0);
@@ -491,7 +512,7 @@
       ctx.closePath();
       ctx.fill();
 
-      // Moldura Interna Dourada
+      // Moldura Dourada
       ctx.strokeStyle = 'rgba(245, 158, 11, 0.3)';
       ctx.lineWidth = 4;
       ctx.stroke();
@@ -502,7 +523,7 @@
       ctx.textAlign = 'center';
       ctx.fillText('✨ PALAVRA & VIDA', 450, 95);
 
-      // Texto do Versículo - FONTE GRANDE
+      // Versículo - Fonte Grande
       ctx.fillStyle = '#f8fafc';
       ctx.font = 'italic 58px serif';
 
@@ -531,7 +552,7 @@
         ctx.fillText(linhas[k].trim(), 450, yInicial + (k * espacamentoLinhas));
       }
 
-      // Referência Bíblica
+      // Referência
       ctx.fillStyle = '#f59e0b';
       ctx.font = 'bold 36px sans-serif';
       ctx.fillText(ref.toUpperCase(), 450, yInicial + alturaTotalTexto + 55);
@@ -544,7 +565,7 @@
       ctx.lineTo(750, 650);
       ctx.stroke();
 
-      // Rodapé Domínio
+      // Rodapé
       ctx.fillStyle = '#94a3b8';
       ctx.font = '22px sans-serif';
       ctx.fillText('palavraevida.com.br', 450, 690);
@@ -552,17 +573,32 @@
       return { canvas, ref, texto };
     }
 
-    // AÇÃO 1: BAIXAR IMAGEM DIRETO
+    // AÇÃO 1: BAIXAR IMAGEM (COM SUPORTE DEDICADO AO SAFARI/IOS)
     function baixarImagemDireto() {
       const { canvas, ref } = criarCanvasCardHD();
       const nomeArquivo = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
-      
-      const link = document.createElement('a');
-      link.download = nomeArquivo;
-      link.href = canvas.toDataURL('image/png');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const dataUrl = canvas.toDataURL('image/png');
+
+      // VERIFICA SE É IPHONE OU IPAD (SAFARI)
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isIOS) {
+        // Exibe o modal no iPhone permitindo segurar para salvar
+        document.getElementById('ios-modal-img').src = dataUrl;
+        document.getElementById('ios-image-modal').classList.remove('hidden');
+      } else {
+        // Download direto em Computadores e Android
+        const link = document.createElement('a');
+        link.download = nomeArquivo;
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+
+    function fecharModalIos() {
+      document.getElementById('ios-image-modal').classList.add('hidden');
     }
 
     // AÇÃO 2: COMPARTILHAR IMAGEM (WEB SHARE API)
@@ -586,9 +622,7 @@
             }
           }
         } else {
-          // Fallback para quem está no PC sem menu de compartilhamento
           baixarImagemDireto();
-          alert('Imagem baixada! Você já pode enviá-la para o seu aplicativo desejado.');
         }
       }, 'image/png');
     }
