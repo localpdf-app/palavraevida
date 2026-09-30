@@ -90,7 +90,7 @@
       <!-- GERADOR DE STORIES -->
       <section id="aba-estudio" class="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 dark:border-slate-700 text-center transition-colors">
         <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-2">Gerador de Versículos para Stories</h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Crie, baixe ou compartilhe um card em alta definição para postar no Instagram ou WhatsApp:</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Crie e compartilhe um card em alta definição para postar no Instagram ou WhatsApp:</p>
 
         <!-- PRÉ-VISUALIZAÇÃO DO CARD -->
         <div id="card-preview-box" class="max-w-xs sm:max-w-sm mx-auto bg-gradient-to-br from-indigo-950 via-indigo-900 to-slate-900 text-white p-8 rounded-3xl shadow-2xl space-y-6 my-4 border border-indigo-700/50 relative overflow-hidden transition-all duration-300">
@@ -107,15 +107,12 @@
           </div>
         </div>
 
-        <!-- BOTÕES DE AÇÃO -->
+        <!-- BOTÕES DE AÇÃO LIMPOS -->
         <div class="flex flex-wrap justify-center gap-3 mt-6">
           <button onclick="sortearNovoVersiculoCard()" class="bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
             <i class="fa-solid fa-dice text-amber-400"></i> Gerar Outro Versículo
           </button>
-          <button onclick="baixarImagemDireto()" class="bg-amber-500 hover:bg-amber-600 text-indigo-950 font-black text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
-            <i class="fa-solid fa-download"></i> Baixar Imagem (PNG)
-          </button>
-          <button onclick="compartilharImagemCard()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-5 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
+          <button onclick="compartilharImagemCard()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-6 py-3 rounded-2xl transition shadow-md flex items-center gap-2">
             <i class="fa-solid fa-share-nodes"></i> Compartilhar Card
           </button>
           <button onclick="copiarTextoCard()" class="bg-indigo-950 dark:bg-slate-900 hover:bg-indigo-900 text-white font-bold text-xs px-5 py-3 rounded-2xl transition flex items-center gap-2">
@@ -401,27 +398,6 @@
 
   </main>
 
-  <!-- MODAL DE VISUALIZAÇÃO E DOWNLOAD PARA SAFARI / IPHONE -->
-  <div id="ios-image-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex flex-col items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 p-4 sm:p-6 rounded-3xl max-w-sm w-full text-center space-y-4 shadow-2xl relative">
-      <button onclick="fecharModalIos()" class="absolute top-3 right-3 text-slate-400 hover:text-white text-lg p-2">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <h3 class="text-sm font-bold text-amber-400 flex items-center justify-center gap-2">
-        <i class="fa-brands fa-apple text-base"></i> Salvar Imagem no iPhone
-      </h3>
-      <p class="text-xs text-slate-300">Toque e segure sobre a imagem abaixo e escolha <b class="text-white">"Adicionar a Fotos"</b>:</p>
-      
-      <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-800">
-        <img id="ios-modal-img" src="" alt="Card Bíblico" class="w-full h-auto block">
-      </div>
-
-      <button onclick="fecharModalIos()" class="w-full bg-amber-500 text-indigo-950 font-bold text-xs py-3 rounded-xl">
-        Concluído
-      </button>
-    </div>
-  </div>
-
   <footer class="bg-indigo-950 dark:bg-slate-950 text-indigo-300 dark:text-slate-400 text-xs py-8 border-t border-indigo-900 dark:border-slate-800 mt-auto">
     <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
       <p class="font-bold text-sm text-white">Portal Palavra & Vida © 2026</p>
@@ -429,7 +405,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT COMPLETO COM SUPORTE UNIVERSAL PARA IPHONE (SAFARI) -->
+  <!-- SCRIPT COMPLETO DE FUNCIONALIDADES -->
   <script>
     // 1. ALTERNADOR DE MODO CLARO / ESCURO
     function alternarModoEscuro() {
@@ -479,7 +455,7 @@
       }, 200);
     }
 
-    // 3. DESENHO DO CANVAS HD
+    // 3. DESENHO DO CANVAS HD PARA O COMPARTILHAMENTO
     function criarCanvasCardHD() {
       const texto = document.getElementById('card-versiculo-texto').innerText;
       const ref = document.getElementById('card-versiculo-ref').innerText;
@@ -573,35 +549,7 @@
       return { canvas, ref, texto };
     }
 
-    // AÇÃO 1: BAIXAR IMAGEM (COM SUPORTE DEDICADO AO SAFARI/IOS)
-    function baixarImagemDireto() {
-      const { canvas, ref } = criarCanvasCardHD();
-      const nomeArquivo = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
-      const dataUrl = canvas.toDataURL('image/png');
-
-      // VERIFICA SE É IPHONE OU IPAD (SAFARI)
-      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-      if (isIOS) {
-        // Exibe o modal no iPhone permitindo segurar para salvar
-        document.getElementById('ios-modal-img').src = dataUrl;
-        document.getElementById('ios-image-modal').classList.remove('hidden');
-      } else {
-        // Download direto em Computadores e Android
-        const link = document.createElement('a');
-        link.download = nomeArquivo;
-        link.href = dataUrl;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-    }
-
-    function fecharModalIos() {
-      document.getElementById('ios-image-modal').classList.add('hidden');
-    }
-
-    // AÇÃO 2: COMPARTILHAR IMAGEM (WEB SHARE API)
+    // AÇÃO ÚNICA: COMPARTILHAR CARD (ONDE PERMITE SALVAR NA GALERIA OU ENVIAR PARA REDES SOCIAIS)
     async function compartilharImagemCard() {
       const { canvas, ref, texto } = criarCanvasCardHD();
       const nomeArquivo = `versiculo-${ref.toLowerCase().replace(/[^a-z0-9]/g, '-')}.png`;
@@ -617,12 +565,17 @@
               text: `${texto} - ${ref} (palavraevida.com.br)`
             });
           } catch (err) {
-            if (err.name !== 'AbortError') {
-              baixarImagemDireto();
-            }
+            // Se o usuário fechar a aba de compartilhar, encerra sem mensagens
           }
         } else {
-          baixarImagemDireto();
+          // Fallback para computadores
+          const imageURL = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.download = nomeArquivo;
+          link.href = imageURL;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
       }, 'image/png');
     }
